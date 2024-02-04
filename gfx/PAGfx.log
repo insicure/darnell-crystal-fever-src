@@ -1,0 +1,63 @@
+PAGfx Converter v0.10 -- by Mollusk -- resurrected by fincs -- forum.palib.info
+If you have suggestions, problems or anything please come to the PAlib forums
+
+Converting PAGfx.ini
+Transparent Color: Magenta
+
+10 sprites:
+  dar: 256colors, 16x288, Pal: dar_Pal, -> dar_Sprite
+  crystal: 16colors, 16x64, Pal: crystal_Pal, -> crystal_Sprite
+  cannon: 16colors, 16x16, Pal: cannon_Pal, -> cannon_Sprite
+  xed: 256colors, 16x16, Pal: xed_Pal, -> xed_Sprite
+  cannon3index: 16colors, 16x16, Pal: cannon3index_Pal, -> cannon3index_Sprite
+  cierra: 16colors, 32x32, Pal: cierra_Pal, -> cierra_Sprite
+  lpca: 16colors, 16x16, Pal: lpca_Pal, -> lpca_Sprite
+  cierrab: 16colors, 32x32, Pal: cierrab_Pal, -> cierrab_Sprite
+  rev01: 16colors, 16x16, Pal: rev01_Pal, -> rev01_Sprite
+  josue: 16colors, 16x32, Pal: josue_Pal, -> josue_Sprite
+
+14 backgrounds:
+  tileemap2 : EasyBg, 1600x1200, Pal: tileemap2_Pal, 26 tiles -> tileemap2_Tiles and tileemap2_Map
+  tileemap2bg1 : EasyBg, 1600x1200, Pal: tileemap2bg1_Pal, 3 tiles -> tileemap2bg1_Tiles and tileemap2bg1_Map
+  tileemap2c : EasyBg, 1600x1200, Pal: tileemap2c_Pal, 7 tiles -> tileemap2c_Tiles and tileemap2c_Map
+  tilemap3 : EasyBg, 1120x480, Pal: tilemap3_Pal, 20 tiles -> tilemap3_Tiles and tilemap3_Map
+  tilemap3c : EasyBg, 1120x480, Pal: tilemap3c_Pal, 4 tiles -> tilemap3c_Tiles and tilemap3c_Map
+  finalcutscene : EasyBg, 256x192, Pal: finalcutscene_Pal, 13 tiles -> finalcutscene_Tiles and finalcutscene_Map
+  finalcutscenec : EasyBg, 256x192, Pal: finalcutscenec_Pal, 2 tiles -> finalcutscenec_Tiles and finalcutscenec_Map
+  lasersbg1 : EasyBg, 256x192, Pal: lasersbg1_Pal, 8 tiles -> lasersbg1_Tiles and lasersbg1_Map
+  lasersbg2 : EasyBg, 256x192, Pal: lasersbg2_Pal, 6 tiles -> lasersbg2_Tiles and lasersbg2_Map
+  lasersbg3 : EasyBg, 256x192, Pal: lasersbg3_Pal, 8 tiles -> lasersbg3_Tiles and lasersbg3_Map
+  lasersbg4 : EasyBg, 256x192, Pal: lasersbg4_Pal, 3 tiles -> lasersbg4_Tiles and lasersbg4_Map
+  actcutscene : EasyBg, 256x192, Pal: actcutscene_Pal, 7 tiles -> actcutscene_Tiles and actcutscene_Map
+  programmingdesign : EasyBg, 256x192, Pal: programmingdesign_Pal, 77 tiles -> programmingdesign_Tiles and programmingdesign_Map
+  artdesigncreditsbg : EasyBg, 256x192, Pal: artdesigncreditsbg_Pal, 48 tiles -> artdesigncreditsbg_Tiles and artdesigncreditsbg_Map
+
+24 palettes:
+  dar_Pal, 15 colors
+  crystal_Pal, 13 colors
+  cannon_Pal, 14 colors
+  xed_Pal, 19 colors
+  cannon3index_Pal, 15 colors
+  cierra_Pal, 4 colors
+  lpca_Pal, 8 colors
+  cierrab_Pal, 5 colors
+  rev01_Pal, 6 colors
+  josue_Pal, 16 colors
+  tileemap2_Pal, 27 colors
+  tileemap2bg1_Pal, 7 colors
+  tileemap2c_Pal, 6 colors
+  tilemap3_Pal, 28 colors
+  tilemap3c_Pal, 4 colors
+  finalcutscene_Pal, 7 colors
+  finalcutscenec_Pal, 2 colors
+  lasersbg1_Pal, 2 colors
+  lasersbg2_Pal, 2 colors
+  lasersbg3_Pal, 2 colors
+  lasersbg4_Pal, 2 colors
+  actcutscene_Pal, 8 colors
+  programmingdesign_Pal, 26 colors
+  artdesigncreditsbg_Pal, 32 colors
+
+Converted in 0 minutes and 1 second
+
+Finished!
