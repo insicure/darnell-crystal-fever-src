@@ -3,7 +3,7 @@ the almost complete darnell source code, it doesnt include the assets though.
 <h1>all my sins when making this game:</h1>
 
 using modified palib but thats def palib<br>
-using fat instead of nitrofs for sprites<br>
+using ram instead of nitrofs for sprites<br>
 using floating point numbers instead of fixed point math<br>
 bad way to detect collision on X (look at ultra16 or newer b90sr versions for a better way to do it)<br>
 darnell's sprite is 16x32 and it's scaled up, thats why the sprite animation is so fucking bad<br>
