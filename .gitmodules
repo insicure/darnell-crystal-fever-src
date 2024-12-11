@@ -1,0 +1,6 @@
+[submodule "external/NasiBentoDS"]
+	path = external/NasiBentoDS
+	url = git@github.com:insicure/NasiBentoDS.git
+[submodule "external/libadx-nds"]
+	path = external/libadx-nds
+	url = https://github.com/headshot2017/libadx-nds.git

@@ -1,0 +1,5 @@
+{
+  "clangd.arguments": [
+    "--query-driver=/opt/wonderful/toolchain/gcc-arm-none-eabi/bin/arm-none-eabi-*"
+  ]
+}
