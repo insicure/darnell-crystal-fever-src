@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: Zlib
-// SPDX-FileNotice: Modified from the original version by the BlocksDS project.
 //
 // Copyright (C) 2005 Michael Noland (joat)
 // Copyright (C) 2005 Jason Rogers (Dovoto)
 // Copyright (C) 2005-2015 Dave Murphy (WinterMute)
-// Copyright (C) 2023 Antonio Niño Díaz
+// Copyright (C) 2023 Antonio Ni�o D�az
 
 // Default ARM7 core
 
@@ -73,6 +72,8 @@ int main(int argc, char *argv[])
 
     while (!exit_loop)
     {
+    	adx_update();
+
         const uint16_t key_mask = KEY_SELECT | KEY_START | KEY_L | KEY_R;
         uint16_t keys_pressed = ~REG_KEYINPUT;
 
