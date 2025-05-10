@@ -1,5 +1,7 @@
+#include "bento/App.hpp"
 #include "filesystem.h"
-#include "core.hpp"
+#include "libadx.h"
+#include "nds/arm9/sassert.h"
 #include "scene/MenuSelector.hpp"
 #include <nds/arm9/console.h>
 #include <nds/arm9/input.h>
@@ -7,23 +9,42 @@
 #include <nds/input.h>
 #include <nds/interrupts.h>
 
-using namespace nb;
+using namespace ppx;
 App app;
+bool disableGlobal = false;
 
 int main()
 {
   consoleDemoInit();
   consoleDebugInit(DebugDevice_NOCASH);
 
-  nitroFSInit(nullptr);
+  {
+    bool res = nitroFSInit(nullptr);
+    sassert(res, "failed to initialize nitrofs");
+    // TODO: handle nitrofs error 
+  }
+
+  {
+    bool res = adx_init();
+    sassert(res, "failed to initialize ADX library");
+    // TODO: handle adx error 
+  }
 
   app.SetScene(new MenuSelector());
 
   while (true) {
     scanKeys();
-
-    if (keysUp() & KEY_START) app.SetScene(new MenuSelector());
-    if (keysHeld() == (KEY_START | KEY_SELECT)) break;
+    
+    if (!disableGlobal)
+    {
+      if (keysHeld() == (KEY_START | KEY_SELECT))
+        app.SetScene(new MenuSelector());
+      
+      // if (keysHeld() == (KEY_START | KEY_L | KEY_R)) 
+      //   app.SetScene(new DebugMenu());
+      
+      if (keysHeld() == (KEY_START | KEY_SELECT | KEY_DOWN)) break;
+    }
 
     app.AppUpdate();
     swiWaitForVBlank();

@@ -1,15 +1,26 @@
-#include "core.hpp"
-#include "struct.hpp"
+#include "nds/arm9/console.h"
+#include "bento/Scene.hpp"
+#include "bento/CircularCounter.hpp"
+#include <string>
 
-using namespace nb;
+using namespace ppx;
+
+struct SceneDesc
+{
+  std::string name;
+  std::string desc;
+};
 
 class MenuSelector : public Scene {
 public:
   CircularCounter counter_selected;
   CircularCounter counter_page;
+  
+  PrintConsole console_main;
+  PrintConsole console_sub;
 
   MenuSelector();
-  ~MenuSelector();
+  ~MenuSelector() override;
   void Preload() override;
   void Update() override;
   void selectMenu();
