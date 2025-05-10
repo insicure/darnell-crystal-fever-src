@@ -1,5 +1,5 @@
 [submodule "external/NasiBentoDS"]
-	path = external/NasiBentoDS
+	path = external/PPX
 	url = git@github.com:insicure/NasiBentoDS.git
 [submodule "external/libadx-nds"]
 	path = external/libadx-nds
