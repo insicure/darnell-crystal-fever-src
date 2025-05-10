@@ -1,0 +1,28 @@
+name: build with blocksds
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: skylyrac/blocksds:slim-v1.10.1
+
+    steps:
+      - name: Checkout repository (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Build NDS project
+        run: |
+          make
+
+      - name: Upload .nds artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nds-builds
+          path: '*.nds'
