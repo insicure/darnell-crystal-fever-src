@@ -1,4 +1,7 @@
 build
 .cache
-compile_commands.json
 *.nds
+compile_commands.json
+
+nitrofs/*
+!nitrofs/.keep
