@@ -9,6 +9,11 @@
 #include <cstdlib>
 #include <ctime>
 
+static inline int MAP_WIDTH = 12;
+static inline int MAP_HEIGHT = 10;
+static inline int TILEW = 20;
+static inline int TILEH = 20;
+
 CollisionPlayer::CollisionPlayer()
 {
   videoSetMode(MODE_0_3D);

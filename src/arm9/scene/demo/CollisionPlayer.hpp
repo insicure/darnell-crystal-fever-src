@@ -8,11 +8,6 @@
 
 using namespace ppx;
 
-#define MAP_WIDTH 12
-#define MAP_HEIGHT 10
-#define TILEW 20
-#define TILEH 20
-
 class CollisionPlayer : public Scene {
 public:
   PrintConsole console;
