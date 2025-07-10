@@ -1,6 +1,8 @@
-#include "bento/Camera.hpp"
-#include "bento/Color.hpp"
-#include "bento/Drawing.hpp"
+#include "ppx/Camera.hpp"
+#include "ppx/Color.hpp"
+#include "ppx/Drawing.hpp"
+#include "ppx/Memory.hpp"
+#include "ppx/TextureAtlas.hpp"
 #include "nds/arm9/console.h"
 #include "nds/arm9/input.h"
 #include "nds/arm9/video.h"
@@ -42,14 +44,15 @@ CreatingTiles::CreatingTiles()
 
 CreatingTiles::~CreatingTiles()
 {
-  atlas.Unload();
+  Unload_TextureAtlas(atlas);
+  ppx_free(map);
 }
 
 void CreatingTiles::Preload()
 {
-  atlas.Load("nitro:/atlas/prototype.txt");
+  atlas = Load_TextureAtlas("nitro:/atlas/prototype.txt");
 
-  map = (uint8_t*)malloc(MAP_WIDTH*MAP_HEIGHT * sizeof(uint8_t));
+  map = ppx_malloc<uint8_t>(MAP_WIDTH*MAP_HEIGHT);
   
   for (int i=0; i<MAP_WIDTH*MAP_HEIGHT; i++)
     map[i] = rand() % 2;
@@ -78,8 +81,8 @@ void CreatingTiles::Update()
   {
     for (int x=0; x<MAP_WIDTH; x++)
     {
-      Texture *tex = atlas[(map[y * MAP_WIDTH + x] == 0) ? "box2" : "box1"];
-      if (tex) tex->Draw(Vec2(x*TILEW, y*TILEH), TRANS_NONE);
+      TextureMap *tex = (*atlas)[(map[y * MAP_WIDTH + x] == 0) ? "box2" : "box1"];
+      if (tex) tex->Draw({x*TILEW, y*TILEH});
     }
   }
 

@@ -1,11 +1,15 @@
 DEFINES		:= -DARM9
 
 SOURCEDIRS	:= src/arm9 \
-							 external/PPX \
+							 external/PPX/src \
+							 external/PPX/external/FastLZ/fastlz.c \
+							 external/PPX/external/murmurhash/murmurhash.c \
 							 external/libadx-nds/arm9/source/adx \
 
 INCLUDEDIRS	:= src/arm9 \
-							 external/PPX \
+							 external/PPX/src \
+							 external/PPX/external/FastLZ \
+							 external/PPX/external/murmurhash \
 							 external/libadx-nds/common \
 
 include $(BLOCKSDS)/sys/default_makefiles/rom_arm9arm7/Makefile.arm9

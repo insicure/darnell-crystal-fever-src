@@ -1,8 +1,8 @@
-#include "bento/Scene.hpp"
-#include "bento/TextureAtlas.hpp"
-#include "bento/Camera.hpp"
-#include "bento/Texture.hpp"
-#include "bento/Vec2.hpp"
+#include "ppx/Scene.hpp"
+#include "ppx/TextureAtlas.hpp"
+#include "ppx/Camera.hpp"
+#include "ppx/Texture.hpp"
+#include "ppx/Vec2.hpp"
 #include "nds/arm9/console.h"
 #include <cstdint>
 
@@ -16,11 +16,11 @@ using namespace ppx;
 class CollisionPlayer : public Scene {
 public:
   PrintConsole console;
-  TextureAtlas atlas;
+  TextureAtlas *atlas = nullptr;
   Camera cam;
 
   Vec2 player_position;
-  Texture *player;
+  TextureMap *player;
 
   uint8_t *map;
 

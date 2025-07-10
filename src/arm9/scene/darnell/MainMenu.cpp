@@ -1,5 +1,7 @@
-#include "bento/Drawing.hpp"
+#include "ppx/Drawing.hpp"
 #include "MainMenu.hpp"
+#include "ppx/FileData.hpp"
+#include "ppx/SillyImage.hpp"
 #include "nds/arm9/background.h"
 #include "nds/arm9/console.h"
 #include "nds/arm9/input.h"
@@ -16,8 +18,8 @@
 
 MainMenu::MainMenu()
 {
-  videoSetMode(MODE_0_3D);
-  videoSetModeSub(MODE_0_2D);
+  videoSetMode(MODE_3_3D);
+  videoSetModeSub(MODE_3_2D);
 
   vramSetPrimaryBanks(
     VRAM_A_TEXTURE,
@@ -30,11 +32,11 @@ MainMenu::MainMenu()
   lcdMainOnBottom();
   InitDrawing();
 
-  bgMain = bgInit(3, BgType_Text4bpp, BgSize_T_256x256, 0, 1);
-  bgSub = bgInitSub(3, BgType_Text4bpp, BgSize_T_256x256, 0, 1);
+  bgMain = bgInit(3, BgType_Bmp8, BgSize_B8_256x256, 1, 0);
+  bgSub = bgInitSub(3, BgType_Bmp8, BgSize_B8_256x256, 1, 0);
 
-  consoleInit(&consoleMain, 1, BgType_Text4bpp, BgSize_T_256x256, 17, 4, true, true);
-  consoleInit(&consoleSub, 1, BgType_Text4bpp, BgSize_T_256x256, 17, 4, false, true);
+  consoleInit(&consoleMain, 1, BgType_Text4bpp, BgSize_T_256x256, 7, 0, true, true);
+  consoleInit(&consoleSub, 1, BgType_Text4bpp, BgSize_T_256x256, 7, 0, false, true);
 
   // turn off screen while preload data to avoid flickering effect
   setBrightness(3, -16);
@@ -42,41 +44,25 @@ MainMenu::MainMenu()
 
 MainMenu::~MainMenu()
 {
-  TitleScreen.Unload();
-  TitleScreen2.Unload();
-  gui_tex.Unload();
+  Unload_SillyImage(TitleScreen);
+  Unload_SillyImage(TitleScreen2);
 }
 
 void MainMenu::Preload()
 {
-  TitleScreen.tex.Load("nitro:/background/TitleScreen_chr.bin");
-  TitleScreen.map.Load("nitro:/background/TitleScreen_scr.bin");
-  TitleScreen.pal.Load("nitro:/background/TitleScreen_pal.bin");
-  sassert(TitleScreen.tex.data != nullptr || 
-          TitleScreen.map.data != nullptr || 
-          TitleScreen.pal.data != nullptr,
-          "failed to load TitleScreen!");
+  TitleScreen = Load_SillyImage("nitro:/background/TitleScreen.sillyimg");
+  sassert(TitleScreen, "failed to load TitleScreen!");
 
-  TitleScreen2.tex.Load("nitro:/background/TitleScreen2_chr.bin");
-  TitleScreen2.map.Load("nitro:/background/TitleScreen2_scr.bin");
-  TitleScreen2.pal.Load("nitro:/background/TitleScreen2_pal.bin");
-  sassert(TitleScreen2.tex.data != nullptr || 
-          TitleScreen2.map.data != nullptr || 
-          TitleScreen2.pal.data != nullptr,
-          "failed to load TitleScreen2!");
+  TitleScreen2 = Load_SillyImage("nitro:/background/TitleScreen2.sillyimg");
+  sassert(TitleScreen2, "failed to load TitleScreen2!");
 
-  // int res = gui_tex.Load(
-  //   "nitro:/ui/gui_tex.bin", "nitro:/ui/gui_pal.bin",
-  //   256, 256, ImageType::ImageType_INDEXED_16);
-  // sassert(res == 0, "failed to load gui texture!");
+  dmaCopy(TitleScreen2->data, bgGetGfxPtr(bgMain), TitleScreen2->width*TitleScreen2->height);
+  // dmaCopy(TitleScreen2.map->data, bgGetMapPtr(bgMain), TitleScreen2.map->length);
+  dmaCopy(TitleScreen2->palette_data, BG_PALETTE, sizeof(uint16_t)*TitleScreen2->palette_count);
 
-  dmaCopy(TitleScreen2.tex.data, bgGetGfxPtr(bgMain), TitleScreen2.tex.length);
-  dmaCopy(TitleScreen2.map.data, bgGetMapPtr(bgMain), TitleScreen2.map.length);
-  dmaCopy(TitleScreen2.pal.data, BG_PALETTE, sizeof(uint16_t)*16);
-
-  dmaCopy(TitleScreen2.tex.data, bgGetGfxPtr(bgSub), TitleScreen2.tex.length);
-  dmaCopy(TitleScreen2.map.data, bgGetMapPtr(bgSub), TitleScreen2.map.length);
-  dmaCopy(TitleScreen2.pal.data, BG_PALETTE_SUB, sizeof(uint16_t)*16);
+  dmaCopy(TitleScreen->data, bgGetGfxPtr(bgSub), TitleScreen2->width*TitleScreen2->height);
+  // dmaCopy(TitleScreen2.map->data, bgGetMapPtr(bgSub), TitleScreen2.map->length);
+  dmaCopy(TitleScreen2->palette_data, BG_PALETTE_SUB, sizeof(uint16_t)*TitleScreen2->palette_count);
 
   consoleSelect(&consoleSub);
   printf("\033[11;12H\033[KDarnell:");
@@ -109,9 +95,9 @@ void MainMenu::Update()
         consoleClear();
         fade.Set(3, -16, 0);
 
-        dmaCopy(TitleScreen.tex.data, bgGetGfxPtr(bgMain), TitleScreen.tex.length);
-        dmaCopy(TitleScreen.map.data, bgGetMapPtr(bgMain), TitleScreen.map.length);
-        dmaCopy(TitleScreen.pal.data, BG_PALETTE, sizeof(uint16_t)*16);
+        dmaCopy(TitleScreen2->data, bgGetGfxPtr(bgMain), TitleScreen2->width*TitleScreen2->height*sizeof(uint16_t));
+        // dmaCopy(TitleScreen2.map->data, bgGetMapPtr(bgMain), TitleScreen2.map->length);
+        // dmaCopy(TitleScreen2->palette_data, BG_PALETTE, sizeof(uint16_t)*TitleScreen2->palette_count);
 
         state = SELECTSCREEN;
       }
@@ -120,7 +106,7 @@ void MainMenu::Update()
 
     case SELECTSCREEN:
     {
-      bool enableInput = fade.Step();
+      // bool enableInput = fade.Step();
       touchPosition touch;
       touchRead(&touch);
 

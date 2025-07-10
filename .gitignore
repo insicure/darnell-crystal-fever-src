@@ -5,3 +5,6 @@ compile_commands.json
 
 nitrofs/*
 !nitrofs/.keep
+
+gfx/atlas/*
+!gfx/atlas/.keep

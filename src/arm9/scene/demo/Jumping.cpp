@@ -1,8 +1,11 @@
-#include "bento/Drawing.hpp"
-#include "bento/Math.hpp"
+#include "ppx/Drawing.hpp"
+#include "ppx/Math.hpp"
+#include "ppx/Memory.hpp"
+#include "ppx/TextureAtlas.hpp"
 #include "nds/arm9/input.h"
 #include "nds/input.h"
 #include "Jumping.hpp"
+#include <cstdint>
 #include <cstdlib>
 #include <ctime>
 
@@ -31,11 +34,11 @@ Jumping::Jumping()
 
 void Jumping::Preload()
 {
-  atlas.Load("nitro:/atlas/prototype.txt");
+  atlas = Load_TextureAtlas("nitro:/atlas/prototype.txt");
 
   // prepare map data
   {
-    map = (uint8_t*)calloc(sizeof(uint8_t), MAP_WIDTH*MAP_HEIGHT);
+    map = ppx_malloc<uint8_t>(MAP_WIDTH*MAP_HEIGHT);
 
     for (int i=0; i<MAP_WIDTH*MAP_HEIGHT; i++)
       map[i] = ((rand() % 10) < 8) ? 0 : 1;
@@ -56,7 +59,7 @@ void Jumping::Preload()
 
   // prepare player
   {
-    player_texture = atlas["player"];
+    player_texture = (*atlas)["player"];
 
     Vec2 position(1, 1);
     player_position = Vec2(
@@ -82,13 +85,13 @@ void Jumping::Preload()
 
 Jumping::~Jumping()
 {
-  atlas.Unload();
-  free(map);
+  Unload_TextureAtlas(atlas);
+  ppx_free(map);
 }
 
 void Jumping::Move(Vec2 direction)
 {
-  f32 length = math::sqrt(direction.x*direction.x + direction.y*direction.y);
+  f32 length = Math::sqrt(direction.x*direction.x + direction.y*direction.y);
   Vec2 delta((direction.x/length)*PLAYER_SPEED, (direction.y/length)*std::abs(player_yvelocity.toFloat()));
 
   Vec2 newpos(player_position.x + delta.x, player_position.y+delta.y);
@@ -209,7 +212,7 @@ void Jumping::Update()
 
       // prepare player
       {
-        player_texture = atlas["player"];
+        player_texture = (*atlas)["player"];
 
         Vec2 position(1, 1);
         player_position = Vec2(
@@ -246,8 +249,8 @@ void Jumping::Update()
     {
       for (int x=0; x<MAP_WIDTH; x++)
       {
-        const TextureMap *tex = atlas[(map[y * MAP_WIDTH + x] == 0) ? "box2" : "box1"];
-        if (tex) tex->Draw(Vec2(x*TILEW, y*TILEH), 0);
+        TextureMap *tex = (*atlas)[(map[y * MAP_WIDTH + x] == 0) ? "box2" : "box1"];
+        if (tex) tex->Draw({x*TILEW, y*TILEH});
       }
     }
 
@@ -255,7 +258,7 @@ void Jumping::Update()
     // DrawRect(player_collision);
 
     SetColor(Color::White());
-    player_texture->Draw(player_position, 0, 0, Vec2(1, 1), Vec2(player_texture->width/2, player_texture->height/2));
+    player_texture->Draw(player_position, {1, 1}, {player_texture->width/2, player_texture->height/2});
 
     EndDrawing();
   }

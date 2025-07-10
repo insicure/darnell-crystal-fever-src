@@ -1,15 +1,11 @@
-#include "bento/App.hpp"
+#include "ppx/App.hpp"
 #include "MenuSelector.hpp"
-#include "scene/testing/FileLoading.hpp"
-#include "scene/testing/SillyImgTester.hpp"
-#include "scene/testing/MovieclipTest.hpp"
-#include "scene/testing/AnimationBasic.hpp"
 #include "scene/demo/CreatingTiles.hpp"
 #include "scene/demo/CollisionPlayer.hpp"
 #include "scene/demo/Jumping.hpp"
 #include "scene/darnell/MainMenu.hpp"
-#include "utils.hpp"
 #include <cstring>
+#include <vector>
 #include <nds/arm9/console.h>
 #include <nds/arm9/input.h>
 #include <nds/arm9/video.h>
@@ -18,18 +14,12 @@
 
 using namespace ppx;
 
-extern App app;
-
 #define ITEMS_PER_PAGE 8
 
-static SceneDesc SceneList[] = {
-  SceneDesc{"AnimationBasic", "Animation testing"},
-  SceneDesc{"SillyImgTester", "SillyImage testing area"},
+static const std::vector<SceneDesc> SceneList = {
   SceneDesc{"3. Jumping", "testing y-velocity"},
   SceneDesc{"2. CollisionPlayer", "8-way movement with gridmap collision"},
   SceneDesc{"1. CreatingTiles", "generate 2d gridmap"},
-  SceneDesc{"MovieclipTest", "drawing animated texture"},
-  SceneDesc{"FileLoading", "test file loading using nitrofs"},
   SceneDesc{"MainMenu", "Darnell main menu"},
 };
 
@@ -58,8 +48,8 @@ void MenuSelector::Preload()
   consoleInit(&console_sub, 0, BgType_Text4bpp, BgSize_T_256x256, 17, 3, false, true);
   consoleSelect(&console_sub);
 
-  counter_selected.max = ARRAYSIZE(SceneList);
-  counter_page.max = (ARRAYSIZE(SceneList)-1) / ITEMS_PER_PAGE;
+  counter_selected.max = SceneList.size();
+  counter_page.max = (SceneList.size()-1) / ITEMS_PER_PAGE;
 }
 
 void MenuSelector::Update()
@@ -90,7 +80,7 @@ void MenuSelector::Update()
   // value clamp
   {
     if (counter_page.value == counter_page.max)
-      counter_selected.max = (ARRAYSIZE(SceneList) - (counter_page.max)*ITEMS_PER_PAGE) - 1;
+      counter_selected.max = (SceneList.size() - (counter_page.max)*ITEMS_PER_PAGE) - 1;
     else
       counter_selected.max = ITEMS_PER_PAGE - 1;
   }
@@ -114,7 +104,7 @@ void MenuSelector::Update()
     for (int i=0; i<ITEMS_PER_PAGE; i++)
     {
       uint32_t index = counter_page.value*ITEMS_PER_PAGE + i;
-      if (index > ARRAYSIZE(SceneList)-1) break;
+      if (index > SceneList.size()-1) break;
 
       if (i == counter_selected.value) {
         consoleSetColor(nullptr, ConsoleColor::CONSOLE_LIGHT_GREEN);
@@ -139,17 +129,12 @@ void MenuSelector::Update()
 
 void MenuSelector::selectMenu()
 {
+  App &app = App::Get();
   uint32_t index = counter_page.value*ITEMS_PER_PAGE + counter_selected.value;
   std::string name = SceneList[index].name;
 
-  if (name == "FileLoading")
-    app.SetScene(new FileLoading());
-
   if (name == "MainMenu")
     app.SetScene(new MainMenu());
-
-  if (name == "MovieclipTest")
-    app.SetScene(new MovieclipTest());
 
   if (name == "1. CreatingTiles")
     app.SetScene(new CreatingTiles());
@@ -159,10 +144,4 @@ void MenuSelector::selectMenu()
 
   if (name == "3. Jumping")
     app.SetScene(new Jumping());
-
-  if (name == "AnimationBasic")
-    app.SetScene(new AnimationBasic());
-
-  if (name == "SillyImgTester")
-    app.SetScene(new SillyImgTester());
 }

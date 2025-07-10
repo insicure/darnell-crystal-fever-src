@@ -1,4 +1,4 @@
-#include "bento/App.hpp"
+#include "ppx/App.hpp"
 #include "filesystem.h"
 #include "libadx.h"
 #include "nds/arm9/sassert.h"
@@ -10,7 +10,6 @@
 #include <nds/interrupts.h>
 
 using namespace ppx;
-App app;
 bool disableGlobal = false;
 
 int main()
@@ -30,6 +29,7 @@ int main()
     // TODO: handle adx error 
   }
 
+  App &app = App::Get();
   app.SetScene(new MenuSelector());
 
   while (true) {

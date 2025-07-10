@@ -1,6 +1,6 @@
 #include "nds/arm9/console.h"
-#include "bento/Scene.hpp"
-#include "bento/CircularCounter.hpp"
+#include "ppx/Scene.hpp"
+#include "ppx/CircularCounter.hpp"
 #include <string>
 
 using namespace ppx;

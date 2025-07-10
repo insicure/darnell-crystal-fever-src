@@ -1,6 +1,6 @@
-#include "bento/Scene.hpp"
-#include "bento/TextureAtlas.hpp"
-#include "bento/Camera.hpp"
+#include "ppx/Scene.hpp"
+#include "ppx/TextureAtlas.hpp"
+#include "ppx/Camera.hpp"
 #include "nds/arm9/console.h"
 #include <cstdint>
 
@@ -14,15 +14,15 @@ using namespace ppx;
 class Jumping : public Scene {
 public:
   PrintConsole console;
-  TextureAtlas atlas;
+  TextureAtlas *atlas = nullptr;
   Camera cam;
 
   Vec2 player_position;
   f32 player_yvelocity;
   f32 player_jump;
-  Texture *player_texture;
+  TextureMap *player_texture = nullptr;
 
-  uint8_t *map;
+  uint8_t *map = nullptr;
 
   const f32 PLAYER_SPEED = 2.6f;
   const f32 PLAYER_GRAVITY = 0.4f;

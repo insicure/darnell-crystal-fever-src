@@ -1,6 +1,8 @@
-#include "bento/FileData.hpp"
-#include "bento/Scene.hpp"
-#include "bento/Texture.hpp"
+#include "ppx/FileData.hpp"
+#include "ppx/Memory.hpp"
+#include "ppx/Scene.hpp"
+#include "ppx/SillyImage.hpp"
+#include "ppx/Texture.hpp"
 #include "nds/arm9/console.h"
 #include "palib_fallback.hpp"
 
@@ -8,19 +10,6 @@ using namespace ppx;
 
 enum SceneState {
   IDLE, SELECTSCREEN, SETTINGS, END
-};
-
-struct Background {
-  FileData tex;
-  FileData map;
-  FileData pal;
-
-  inline void Unload()
-  {
-    tex.Unload();
-    map.Unload();
-    pal.Unload();
-  }
 };
 
 class MainMenu : public Scene {
@@ -36,9 +25,8 @@ public:
 
   SceneState state = SceneState::IDLE;
 
-  Background TitleScreen;
-  Background TitleScreen2;
-  Texture gui_tex;
+  SillyImage *TitleScreen = nullptr;
+  SillyImage *TitleScreen2 = nullptr;
 
   MainMenu();
   ~MainMenu() override;
