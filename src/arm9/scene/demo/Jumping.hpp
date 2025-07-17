@@ -1,18 +1,19 @@
+#include "nds/arm9/input.h"
+#include "nds/input.h"
+#include "nds/system.h"
 #include "ppx/Scene.hpp"
 #include "ppx/TextureAtlas.hpp"
 #include "ppx/Camera.hpp"
 #include "nds/arm9/console.h"
+#include "ppx/Vec2.hpp"
+#include "scene/demo/CharacterController.h"
 #include <cstdint>
 
 using namespace ppx;
 
-#define MAP_WIDTH 12
-#define MAP_HEIGHT 10
-#define TILEW 20
-#define TILEH 20
-
 class Jumping : public Scene {
 public:
+
   PrintConsole console;
   TextureAtlas *atlas = nullptr;
   Camera cam;
@@ -24,6 +25,8 @@ public:
 
   uint8_t *map = nullptr;
 
+  CharacterController player;
+
   const f32 PLAYER_SPEED = 2.6f;
   const f32 PLAYER_GRAVITY = 0.4f;
   const f32 PLAYER_JUMP = 5.0f;
@@ -33,6 +36,7 @@ public:
   void Preload() override;
   void Update() override;
 
+  void BuildMap();
   void Move(Vec2 direction);
   bool isWalkable(int tileX, int tileY);
 };

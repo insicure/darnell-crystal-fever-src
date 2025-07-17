@@ -8,3 +8,4 @@ nitrofs/*
 
 gfx/atlas/*
 !gfx/atlas/.keep
+.continue/rules/cpp.yaml

@@ -2,7 +2,7 @@
 #include "filesystem.h"
 #include "libadx.h"
 #include "nds/arm9/sassert.h"
-#include "scene/MenuSelector.hpp"
+#include "scene/demo/Jumping.hpp"
 #include <nds/arm9/console.h>
 #include <nds/arm9/input.h>
 #include <nds/arm9/video.h>
@@ -30,15 +30,15 @@ int main()
   }
 
   App &app = App::Get();
-  app.SetScene(new MenuSelector());
+  app.SetScene(new Jumping());
 
   while (true) {
     scanKeys();
     
     if (!disableGlobal)
     {
-      if (keysHeld() == (KEY_START | KEY_SELECT))
-        app.SetScene(new MenuSelector());
+      // if (keysHeld() == (KEY_START | KEY_SELECT))
+      //   app.SetScene(new MenuSelector());
       
       // if (keysHeld() == (KEY_START | KEY_L | KEY_R)) 
       //   app.SetScene(new DebugMenu());

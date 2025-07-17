@@ -27,6 +27,7 @@ format_map["nds12_0.png"]="indexed4"
 format_map["nds12_1.png"]="indexed4"
 format_map["nds12_2.png"]="indexed4"
 format_map["player.png"]="indexed16"
+format_map["darnel.png"]="indexed16"
 format_map["TitleScreen.png"]="indexed256"
 format_map["TitleScreen2.png"]="indexed256"
 
